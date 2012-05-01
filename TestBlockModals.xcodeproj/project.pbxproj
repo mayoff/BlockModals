@@ -21,6 +21,8 @@
 		31F0D2E615505C660062CA8D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31F0D2E415505C660062CA8D /* InfoPlist.strings */; };
 		31F0D2F015505CB90062CA8D /* BlockAlertViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D2EF15505CB90062CA8D /* BlockAlertViewTests.m */; };
 		31F0D2F315505D5E0062CA8D /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D2F215505D5E0062CA8D /* BlockAlertView.m */; };
+		31F0D31C155090A60062CA8D /* UIView+SubviewPassingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */; };
+		31F0D324155095AE0062CA8D /* GenericAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,10 @@
 		31F0D2EF15505CB90062CA8D /* BlockAlertViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockAlertViewTests.m; sourceTree = "<group>"; };
 		31F0D2F115505D5E0062CA8D /* BlockAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockAlertView.h; sourceTree = "<group>"; };
 		31F0D2F215505D5E0062CA8D /* BlockAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockAlertView.m; sourceTree = "<group>"; };
+		31F0D31A155090A60062CA8D /* UIView+SubviewPassingTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SubviewPassingTest.h"; sourceTree = "<group>"; };
+		31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SubviewPassingTest.m"; sourceTree = "<group>"; };
+		31F0D322155095AE0062CA8D /* GenericAlertViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericAlertViewDelegate.h; sourceTree = "<group>"; };
+		31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericAlertViewDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +157,11 @@
 			children = (
 				31F0D2EE15505CB90062CA8D /* BlockAlertViewTests.h */,
 				31F0D2EF15505CB90062CA8D /* BlockAlertViewTests.m */,
+				31F0D31A155090A60062CA8D /* UIView+SubviewPassingTest.h */,
+				31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */,
 				31F0D2E215505C660062CA8D /* Supporting Files */,
+				31F0D322155095AE0062CA8D /* GenericAlertViewDelegate.h */,
+				31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -285,6 +295,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				31F0D2F015505CB90062CA8D /* BlockAlertViewTests.m in Sources */,
+				31F0D31C155090A60062CA8D /* UIView+SubviewPassingTest.m in Sources */,
+				31F0D324155095AE0062CA8D /* GenericAlertViewDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
