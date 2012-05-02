@@ -5,7 +5,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 #import <UIKit/UIKit.h>
 
-typedef void (^BlockAlertViewHandler)();
+typedef void (^BlockAlertViewHandler)(void);
 
 /**
 ## `BlockAlertView`
@@ -14,7 +14,7 @@ Use a `BlockAlertView` to display an alert message to the user.  `BlockAlertView
 
 If the user taps one of my buttons, and you have set a handler block for that button, I call the handler block **instead of** sending `alertView:clickedButtonAtIndex:` to my delegate.  If the user taps a button and you have **not** set a handler block for that button, I send `alertView:clickedButtonAtIndex:` to my delegate.
 
-You can set my `delegate` if you want to respond to any of the non-button-related `UIAlertViewDelegate` methods, or if you want to respond to some buttons using `alertView:clickButtonAtIndex:`.
+You can set my `delegate` if you want to respond to any other `UIAlertViewDelegate` methods, or if you want to respond to some buttons using `alertView:clickedButtonAtIndex:`.  You can assign a button index to my `cancelButtonIndex` property to give me a cancel button, if you need it.
 */
 
 @interface BlockAlertView : UIAlertView
@@ -25,7 +25,7 @@ I initialize myself with no delegate and no buttons.  You can set my delegate us
 - (id)initWithTitle:(NSString *)title message:(NSString *)message;
 
 /**
-I set the handler for the button at index `buttonIndex` to `handler`.  If I already had a handler for that button, I discard the old block.  If `handler` is nil, I just discard the existing handler for the button, if I had one.
+I set the handler for the button at index `buttonIndex` to `handler`.  If I already had a handler for that button, I discard the old handler.  If `handler` is nil, I just discard the existing handler for the button, if I have one.
 */
 - (void)setHandler:(BlockAlertViewHandler)handler forButtonAtIndex:(NSInteger)buttonIndex;
 
