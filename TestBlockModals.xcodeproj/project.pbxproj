@@ -23,6 +23,9 @@
 		31F0D2F315505D5E0062CA8D /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D2F215505D5E0062CA8D /* BlockAlertView.m */; };
 		31F0D31C155090A60062CA8D /* UIView+SubviewPassingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */; };
 		31F0D324155095AE0062CA8D /* GenericAlertViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */; };
+		31F0D3311550E4900062CA8D /* BlockActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D3301550E4900062CA8D /* BlockActionSheet.m */; };
+		31F0D3391550EB8D0062CA8D /* GenericActionSheetDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D3381550EB8D0062CA8D /* GenericActionSheetDelegate.m */; };
+		31F0D33C1550EDA10062CA8D /* BlockActionSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F0D33B1550EDA10062CA8D /* BlockActionSheetTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +65,12 @@
 		31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SubviewPassingTest.m"; sourceTree = "<group>"; };
 		31F0D322155095AE0062CA8D /* GenericAlertViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericAlertViewDelegate.h; sourceTree = "<group>"; };
 		31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericAlertViewDelegate.m; sourceTree = "<group>"; };
+		31F0D32F1550E4900062CA8D /* BlockActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockActionSheet.h; sourceTree = "<group>"; };
+		31F0D3301550E4900062CA8D /* BlockActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockActionSheet.m; sourceTree = "<group>"; };
+		31F0D3371550EB8D0062CA8D /* GenericActionSheetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericActionSheetDelegate.h; sourceTree = "<group>"; };
+		31F0D3381550EB8D0062CA8D /* GenericActionSheetDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericActionSheetDelegate.m; sourceTree = "<group>"; };
+		31F0D33A1550EDA10062CA8D /* BlockActionSheetTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockActionSheetTests.h; sourceTree = "<group>"; };
+		31F0D33B1550EDA10062CA8D /* BlockActionSheetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockActionSheetTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +157,8 @@
 			children = (
 				31F0D2F115505D5E0062CA8D /* BlockAlertView.h */,
 				31F0D2F215505D5E0062CA8D /* BlockAlertView.m */,
+				31F0D32F1550E4900062CA8D /* BlockActionSheet.h */,
+				31F0D3301550E4900062CA8D /* BlockActionSheet.m */,
 			);
 			path = BlockModals;
 			sourceTree = "<group>";
@@ -157,11 +168,15 @@
 			children = (
 				31F0D2EE15505CB90062CA8D /* BlockAlertViewTests.h */,
 				31F0D2EF15505CB90062CA8D /* BlockAlertViewTests.m */,
+				31F0D322155095AE0062CA8D /* GenericAlertViewDelegate.h */,
+				31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */,
+				31F0D33A1550EDA10062CA8D /* BlockActionSheetTests.h */,
+				31F0D33B1550EDA10062CA8D /* BlockActionSheetTests.m */,
+				31F0D3371550EB8D0062CA8D /* GenericActionSheetDelegate.h */,
+				31F0D3381550EB8D0062CA8D /* GenericActionSheetDelegate.m */,
 				31F0D31A155090A60062CA8D /* UIView+SubviewPassingTest.h */,
 				31F0D31B155090A60062CA8D /* UIView+SubviewPassingTest.m */,
 				31F0D2E215505C660062CA8D /* Supporting Files */,
-				31F0D322155095AE0062CA8D /* GenericAlertViewDelegate.h */,
-				31F0D323155095AE0062CA8D /* GenericAlertViewDelegate.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -287,6 +302,7 @@
 				31F0D2AE15505B920062CA8D /* AppDelegate.m in Sources */,
 				31F0D2B115505B920062CA8D /* ViewController.m in Sources */,
 				31F0D2F315505D5E0062CA8D /* BlockAlertView.m in Sources */,
+				31F0D3311550E4900062CA8D /* BlockActionSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +313,8 @@
 				31F0D2F015505CB90062CA8D /* BlockAlertViewTests.m in Sources */,
 				31F0D31C155090A60062CA8D /* UIView+SubviewPassingTest.m in Sources */,
 				31F0D324155095AE0062CA8D /* GenericAlertViewDelegate.m in Sources */,
+				31F0D3391550EB8D0062CA8D /* GenericActionSheetDelegate.m in Sources */,
+				31F0D33C1550EDA10062CA8D /* BlockActionSheetTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

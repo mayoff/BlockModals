@@ -100,7 +100,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
         handler1Called = YES;
     }];
     // -[UIAlertView dismissWithClickedButtonIndex:animated:] doesn't send alertView:clickedButtonAtIndex: to the delegate.
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertTrue(handler0Called, @"BlockAlertView invokes handler for button 0");
     STAssertFalse(handler1Called, @"BlockAlertView doesn't invoke handler for button 1");
 }
@@ -116,7 +116,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
         handler1Called = YES;
     }];
     // -[UIAlertView dismissWithClickedButtonIndex:animated:] doesn't send alertView:clickedButtonAtIndex: to the delegate.
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertFalse(handler0Called, @"BlockAlertView doesn't invoke handler for button 0");
     STAssertTrue(handler1Called, @"BlockAlertView invokes handler for button 1");
 }
@@ -132,7 +132,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
         handler1Called = YES;
     } forButtonAtIndex:i];
     // -[UIAlertView dismissWithClickedButtonIndex:animated:] doesn't send alertView:clickedButtonAtIndex: to the delegate.
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertFalse(handler0Called, @"BlockAlertView doesn't invoke replaced handler");
     STAssertTrue(handler1Called, @"BlockAlertView invokes replacement handler");
 }
@@ -145,7 +145,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     }];
     [alert setHandler:nil forButtonAtIndex:i];
     // -[UIAlertView dismissWithClickedButtonIndex:animated:] doesn't send alertView:clickedButtonAtIndex: to the delegate.
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertFalse(handlerCalled, @"BlockAlertView doesn't invoke removed handler");
 }
 
@@ -159,7 +159,8 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     }];
     NSInteger i = [alert addButtonWithTitle:@"button 1"];
     delegate.clickedButtonIndexes_expected = [NSCountedSet setWithObject:[NSNumber numberWithInteger:i]];
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    NSLog(@"button = %@", [alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]]);
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertFalse(handlerCalled, @"BlockAlertView doesn't invoke button 0 handler");
     [self checkDelegate:delegate];
 }
@@ -173,7 +174,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     NSInteger i = [alert addButtonWithTitle:@"button 1" handler:^{
         handlerCalled = YES;
     }];
-    [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     STAssertTrue(handlerCalled, @"BlockAlertView invokes button 1 handler");
     [self checkDelegate:delegate];
 }
@@ -195,7 +196,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     
     [alert show];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [[alert descendantButtonWithTitleText:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
+        [[alert descendantControlWithTitle:[alert buttonTitleAtIndex:i]] sendActionsForControlEvents:UIControlEventTouchUpInside];
     });
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.5]];
     

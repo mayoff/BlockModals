@@ -20,9 +20,16 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     return nil;
 }
 
-- (UIButton *)descendantButtonWithTitleText:(NSString *)text {
-    return (UIButton *)[self subviewPassingTest:^BOOL(UIView *view) {
-        return [view isKindOfClass:[UIButton class]] && [[(UIButton *)view titleLabel].text isEqualToString:text];
+- (UIControl *)descendantControlWithTitle:(NSString *)title {
+    return (UIControl *)[self subviewPassingTest:^BOOL(UIView *view) {
+        id object = view;
+        if (![object isKindOfClass:[UIControl class]])
+            return NO;
+        if ([object respondsToSelector:@selector(titleLabel)] && [[object titleLabel] respondsToSelector:@selector(text)] && [[object titleLabel].text isEqualToString:title])
+            return YES;
+        if ([object respondsToSelector:@selector(title)] && [[object title] isEqualToString:title])
+            return YES;
+        return NO;
     }];
 }
 
