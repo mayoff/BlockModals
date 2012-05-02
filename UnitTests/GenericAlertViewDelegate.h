@@ -12,10 +12,10 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 @property (nonatomic) BOOL didPresentAlertView_expected;
 @property (nonatomic, copy) NSCountedSet *dismissWithButtonIndexes_expected;
 
-@property (nonatomic, copy) NSCountedSet *clickedButtonIndexes_actual;
-@property (nonatomic) BOOL willPresentAlertView_actual;
-@property (nonatomic) BOOL didPresentAlertView_actual;
-@property (nonatomic, copy) NSCountedSet *willDismissWithButtonIndexes_actual;
-@property (nonatomic, copy) NSCountedSet *didDismissWithButtonIndexes_actual;
+@property (nonatomic, readonly) NSCountedSet *clickedButtonIndexes_actual;
+@property (nonatomic, readonly) BOOL willPresentAlertView_actual;
+@property (nonatomic, readonly) BOOL didPresentAlertView_actual;
+@property (nonatomic, readonly) NSCountedSet *willDismissWithButtonIndexes_actual;
+@property (nonatomic, readonly) NSCountedSet *didDismissWithButtonIndexes_actual;
 
 @end
