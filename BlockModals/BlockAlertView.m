@@ -9,7 +9,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 @package
     __unsafe_unretained BlockAlertView *_alertView;
 }
-
 @end
 
 @implementation BlockAlertViewDelegate
@@ -45,7 +44,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 #pragma mark - Public API
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    NSLog(@"initWithCoder");
     if (!(self = [super initWithCoder:aDecoder]))
         return nil;
     [self initBlockAlertView];
@@ -53,7 +51,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 }
 
 - (id)initWithFrame:(CGRect)frame {
-    NSLog(@"initWithFrame");
     if (!(self = [super initWithFrame:frame]))
         return nil;
     [self initBlockAlertView];
