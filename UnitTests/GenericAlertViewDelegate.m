@@ -4,7 +4,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 */
 
 #import "GenericAlertViewDelegate.h"
-#import <SenTestingKit/SenTestingKit.h>
 
 @implementation GenericAlertViewDelegate
 @synthesize clickedButtonIndexes_expected = _clickedButtonIndexes_expected;
