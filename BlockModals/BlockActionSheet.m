@@ -125,19 +125,23 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 #pragma mark - Implementation details
 
 - (void)BlockActionSheet_init {
-    _clickedHandlers = [[NSMutableArray alloc] initWithCapacity:5];
-    _didDismissHandlers = [[NSMutableArray alloc] initWithCapacity:5];
     _myDelegate = [[BlockActionSheetDelegate alloc] init];
     _myDelegate->_actionSheet = self;
     super.delegate = _myDelegate;
 }
 
 - (NSMutableArray *)BlockActionSheet_handlersForPhase:(BlockActionSheetPhase)phase {
+    __strong NSMutableArray **handlersPointer;
     switch (phase) {
-        case BlockActionSheetClickedPhase: return _clickedHandlers;
-        case BlockActionSheetDidDismissPhase: return _didDismissHandlers;
+        case BlockActionSheetClickedPhase: handlersPointer = &_clickedHandlers; break;
+        case BlockActionSheetDidDismissPhase: handlersPointer = &_didDismissHandlers; break;
+        default: NSAssert(YES, @"BlockActionSheet invalid phase %d", (int)phase); break;
     }
-    NSAssert(NO, @"BlockActionSheet invalid phase %d", (int)phase);
+    
+    if (!*handlersPointer) {
+        *handlersPointer = [[NSMutableArray alloc] initWithCapacity:5];
+    }
+    return *handlersPointer;
 }
 
 - (BOOL)BlockActionSheet_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase {
