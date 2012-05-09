@@ -5,6 +5,13 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 #import "BlockActionSheet.h"
 
+@interface BlockActionSheet ()
+
+- (BOOL)BlockActionSheet_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase;
+
+@end
+
+
 @interface BlockActionSheetDelegate : NSObject <UIActionSheetDelegate> {
 @package
     __unsafe_unretained BlockActionSheet *_actionSheet;
@@ -14,13 +21,19 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 @implementation BlockActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    BlockActionSheetHandler handler = [_actionSheet buttonHandlerAtIndex:buttonIndex];
-    if (handler) {
-        handler();
-    } else {
+    if (![_actionSheet BlockActionSheet_invokeBlockForButtonAtIndex:buttonIndex phase:BlockActionSheetClickedPhase]) {
         id userDelegate = [actionSheet delegate];
         if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
             [userDelegate actionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
+        }
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (![_actionSheet BlockActionSheet_invokeBlockForButtonAtIndex:buttonIndex phase:BlockActionSheetDidDismissPhase]) {
+        id userDelegate = [actionSheet delegate];
+        if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
+            [userDelegate actionSheet:actionSheet didDismissWithButtonIndex:buttonIndex];
         }
     }
 }
@@ -37,7 +50,8 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 
 @implementation BlockActionSheet {
-    NSMutableArray *_handlers;
+    NSMutableArray *_clickedHandlers;
+    NSMutableArray *_didDismissHandlers;
     BlockActionSheetDelegate *_myDelegate;
     __unsafe_unretained id<UIActionSheetDelegate> _userDelegate;
 }
@@ -47,14 +61,14 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (!(self = [super initWithCoder:aDecoder]))
         return nil;
-    [self initBlockActionSheet];
+    [self BlockActionSheet_init];
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
     if (!(self = [super initWithFrame:frame]))
         return nil;
-    [self initBlockActionSheet];
+    [self BlockActionSheet_init];
     return self;
 }
 
@@ -71,14 +85,15 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     return _userDelegate;
 }
 
-- (BlockActionSheetHandler)buttonHandlerAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex < 0 || buttonIndex >= _handlers.count)
+- (BlockActionSheetHandler)buttonHandlerAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase {
+    NSMutableArray *handlers = [self BlockActionSheet_handlersForPhase:phase];
+    if (buttonIndex < 0 || buttonIndex >= handlers.count)
         return nil;
-    id handler = [_handlers objectAtIndex:buttonIndex];
+    id handler = [handlers objectAtIndex:buttonIndex];
     return handler == [NSNull null] ? nil : handler;
 }
 
-- (void)setHandler:(BlockActionSheetHandler)handler forButtonAtIndex:(NSInteger)buttonIndex {
+- (void)setButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler {
     NSAssert(buttonIndex >= 0 && buttonIndex < self.numberOfButtons, @"buttonIndex %d is out of range [0,%d)", buttonIndex, self.numberOfButtons);
     NSNull *null = [NSNull null];
 
@@ -90,25 +105,49 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
         handlerObject = [handler copy];
     }
 
-    for (int i = buttonIndex - _handlers.count; i >= 0; --i) {
-        [_handlers addObject:null];
+    NSMutableArray *handlers = [self BlockActionSheet_handlersForPhase:phase];
+    for (int i = buttonIndex - handlers.count; i >= 0; --i) {
+        [handlers addObject:null];
     }
-    [_handlers replaceObjectAtIndex:buttonIndex withObject:handlerObject];
+    [handlers replaceObjectAtIndex:buttonIndex withObject:handlerObject];
 }
 
 - (NSInteger)addButtonWithTitle:(NSString *)title handler:(BlockActionSheetHandler)handler {
+    return [self addButtonWithTitle:title phase:BlockActionSheetClickedPhase handler:handler];
+}
+
+- (NSInteger)addButtonWithTitle:(NSString *)title phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler {
     NSInteger i = [self addButtonWithTitle:title];
-    [self setHandler:handler forButtonAtIndex:i];
+    [self setButtonAtIndex:i phase:phase handler:handler];
     return i;
 }
 
 #pragma mark - Implementation details
 
-- (void)initBlockActionSheet {
-    _handlers = [[NSMutableArray alloc] initWithCapacity:5];
+- (void)BlockActionSheet_init {
+    _clickedHandlers = [[NSMutableArray alloc] initWithCapacity:5];
+    _didDismissHandlers = [[NSMutableArray alloc] initWithCapacity:5];
     _myDelegate = [[BlockActionSheetDelegate alloc] init];
     _myDelegate->_actionSheet = self;
     super.delegate = _myDelegate;
+}
+
+- (NSMutableArray *)BlockActionSheet_handlersForPhase:(BlockActionSheetPhase)phase {
+    switch (phase) {
+        case BlockActionSheetClickedPhase: return _clickedHandlers;
+        case BlockActionSheetDidDismissPhase: return _didDismissHandlers;
+    }
+    NSAssert(NO, @"BlockActionSheet invalid phase %d", (int)phase);
+}
+
+- (BOOL)BlockActionSheet_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase {
+    BlockActionSheetHandler handler = [self buttonHandlerAtIndex:buttonIndex phase:phase];
+    if (handler) {
+        handler();
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

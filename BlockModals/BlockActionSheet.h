@@ -7,36 +7,50 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 typedef void (^BlockActionSheetHandler)(void);
 
+typedef enum {
+    BlockActionSheetClickedPhase,
+    BlockActionSheetDidDismissPhase
+} BlockActionSheetPhase;
+
 /**
 ## `BlockActionSheet`
 
-Use a `BlockActionSheet` to offer the user a small selection of actions.  `BlockActionSheet` is a subclass of `UIActionSheet`, and supports all of the features of `UIActionSheet`.  `BlockActionSheet` adds support for setting a handler block for each button.
+Use me to offer the user a small selection of actions.  I am a subclass of `UIActionSheet`, and support all of the features of `UIActionSheet`.  I add support for setting handler blocks for each button.  You can set block for each button, for each phase of button handling.
 
-If the user taps one of my buttons, and you have set a handler block for that button, I call the handler block **instead of** sending `actionSheet:clickedButtonAtIndex:` to my delegate.  If the user taps a button and you have **not** set a handler block for that button, I send `actionSheet:clickedButtonAtIndex:` to my delegate.
+The first phase is `BlockActionSheetClickedPhase`, which is when I send `actionSheet:clickedButtonAtIndex:` to my delegate.  If you set a block for a button for this phase, and the user taps the button, then I invoke the block **instead of** sending `actionSheet:clickedButtonAtIndex:` to my delegate.
 
-You can set my `delegate` if you want to respond to any other `UIActionSheetDelegate` messages, or if you want to respond to some buttons using `actionSheet:clickedButtonAtIndex:`.
+The second phase is `BlockActionSheetDidDismissPhase`, which is when I send `actionSheet:didDismissWithButtonIndex:` to my delegate.  If you set a block for a button for this phase, and the user taps the button, then I invoke the block **instead of** sending `actionSheet:didDismissWithButtonIndex:` to my delegate.
+
+If the user taps a button, and I don't have a block set for that button for some phase, then during that phase, I send the appropriate message to my delegate.
+
+You can set my `delegate` if you want to respond to any other `UIActionSheetDelegate` messages, or if you want to respond to some buttons using the normal delegate methods.
 */
 
 @interface BlockActionSheet : UIActionSheet
 
 /**
-I initialize myself with no delegate and no buttons.  You can set my delegate using `setDelegate:`, and you can add buttons using `addButtonWithTitle:handler:` and `addButtonWithTitle:`.  You can assign button indexes to my `cancelButtonIndex` and `destructiveButtonIndex` properties to give me cancel and destructive buttons, if you need them.
+I initialize myself with no delegate and no buttons.  You can set my delegate using `setDelegate:`, and you can add buttons using `addButtonWithTitle:phase:handler:`, `addButtonWithTitle:handler:`, and `addButtonWithTitle:`.  You can assign button indexes to my `cancelButtonIndex` and `destructiveButtonIndex` properties to give me cancel and destructive buttons, if you need them.
 */
 - (id)initWithTitle:(NSString *)title;
 
 /**
-I set the handler for the button at index `buttonIndex` to `handler`.  If I already had a handler for that button, I discard the old handler.  If `handler` is nil, I just discard the existing handler for the button, if I have one.
+I set the handler for the button at index `buttonIndex` for phase `phase` to `handler`.  If `handler` is nil, I discard any existing handler for the button for that phase.
 */
-- (void)setHandler:(BlockActionSheetHandler)handler forButtonAtIndex:(NSInteger)buttonIndex;
+- (void)setButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler;
 
 /**
-Convenience method for adding a button and setting its handler.  I add a button titled `title` and set its handler to `handler`.  If `handler` is nil, I just add the button.
+Convenience method for adding a button and setting its clicked-phase handler.  I add a button titled `title` and set its handler for `BlockActionSheetClickedPhase` to `handler`.  If `handler` is nil, I just add the button.  I return the index of the button.
 */
 - (NSInteger)addButtonWithTitle:(NSString *)title handler:(BlockActionSheetHandler)handler;
 
 /**
-I return the handler for the button at index `buttonIndex`, or nil if no handler is set.
+Convenience method for adding a button and setting one of its handlers.  I add a button titled `title` and set its handler for phase `phase` to `handler`.  If `handler` is nil, I just add the button.  I return the index of the button.
 */
-- (BlockActionSheetHandler)buttonHandlerAtIndex:(NSInteger)buttonIndex;
+- (NSInteger)addButtonWithTitle:(NSString *)title phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler;
+
+/**
+I return the handler for the button at index `buttonIndex` for phase `phase`, or nil if no handler is set.
+*/
+- (BlockActionSheetHandler)buttonHandlerAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase;
 
 @end
