@@ -15,7 +15,7 @@ typedef enum {
 /**
 ## `BlockActionSheet`
 
-Use me to offer the user a small selection of actions.  I am a subclass of `UIActionSheet`, and support all of the features of `UIActionSheet`.  I add support for setting handler blocks for each button.  You can set block for each button, for each phase of button handling.
+Use me to offer the user a small selection of actions.  I am a subclass of `UIActionSheet`, and I support all of the features of `UIActionSheet`.  I add support for setting handler blocks for each button.  You can set a block for each button, for each phase of button handling.
 
 The first phase is `BlockActionSheetClickedPhase`, which is when I send `actionSheet:clickedButtonAtIndex:` to my delegate.  If you set a block for a button for this phase, and the user taps the button, then I invoke the block **instead of** sending `actionSheet:clickedButtonAtIndex:` to my delegate.
 
