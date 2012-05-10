@@ -4,10 +4,11 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 */
 
 #import "BlockActionSheet.h"
+#import <objc/message.h>
 
 @interface BlockActionSheet ()
 
-- (BOOL)BlockActionSheet_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase;
+- (void)BlockActionSheet_delegateWasCalledWithButtonIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase message:(SEL)selector;
 
 @end
 
@@ -21,21 +22,11 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 @implementation BlockActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (![_actionSheet BlockActionSheet_invokeBlockForButtonAtIndex:buttonIndex phase:BlockActionSheetClickedPhase]) {
-        id userDelegate = [actionSheet delegate];
-        if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
-            [userDelegate actionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
-        }
-    }
+    [_actionSheet BlockActionSheet_delegateWasCalledWithButtonIndex:buttonIndex phase:BlockActionSheetClickedPhase message:_cmd];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (![_actionSheet BlockActionSheet_invokeBlockForButtonAtIndex:buttonIndex phase:BlockActionSheetDidDismissPhase]) {
-        id userDelegate = [actionSheet delegate];
-        if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
-            [userDelegate actionSheet:actionSheet didDismissWithButtonIndex:buttonIndex];
-        }
-    }
+    [_actionSheet BlockActionSheet_delegateWasCalledWithButtonIndex:buttonIndex phase:BlockActionSheetDidDismissPhase message:_cmd];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
@@ -151,6 +142,16 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
         return YES;
     } else {
         return NO;
+    }
+}
+
+- (void)BlockActionSheet_delegateWasCalledWithButtonIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase message:(SEL)selector {
+    BlockActionSheetHandler handler = [self buttonHandlerAtIndex:buttonIndex phase:phase];
+    if (handler) {
+        handler();
+    } else if (_userDelegate && [_userDelegate respondsToSelector:selector]) {
+        typedef void DelegateMethod(id, SEL, id, NSInteger);
+        ((DelegateMethod *)objc_msgSend)(_userDelegate, selector, self, buttonIndex);
     }
 }
 

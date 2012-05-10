@@ -4,10 +4,11 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 */
 
 #import "BlockAlertView.h"
+#import <objc/message.h>
 
 @interface BlockAlertView ()
 
-- (BOOL)BlockAlertView_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockAlertViewPhase)phase;
+- (void)BlockAlertView_delegateWasCalledWithButtonIndex:(NSInteger)buttonIndex phase:(BlockAlertViewPhase)phase message:(SEL)selector;
 
 @end
 
@@ -21,21 +22,11 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 @implementation BlockAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (![_alertView BlockAlertView_invokeBlockForButtonAtIndex:buttonIndex phase:BlockAlertViewClickedPhase]) {
-        id userDelegate = [alertView delegate];
-        if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
-            [userDelegate alertView:alertView clickedButtonAtIndex:buttonIndex];
-        }
-    }
+    [_alertView BlockAlertView_delegateWasCalledWithButtonIndex:buttonIndex phase:BlockAlertViewClickedPhase message:_cmd];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (![_alertView BlockAlertView_invokeBlockForButtonAtIndex:buttonIndex phase:BlockAlertViewDidDismissPhase]) {
-        id userDelegate = [alertView delegate];
-        if (userDelegate && [userDelegate respondsToSelector:_cmd]) {
-            [userDelegate alertView:alertView didDismissWithButtonIndex:buttonIndex];
-        }
-    }
+    [_alertView BlockAlertView_delegateWasCalledWithButtonIndex:buttonIndex phase:BlockAlertViewDidDismissPhase message:_cmd];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
@@ -60,14 +51,14 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (!(self = [super initWithCoder:aDecoder]))
         return nil;
-    [self initBlockAlertView];
+    [self BlockAlertView_init];
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
     if (!(self = [super initWithFrame:frame]))
         return nil;
-    [self initBlockAlertView];
+    [self BlockAlertView_init];
     return self;
 }
 
@@ -123,7 +114,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 #pragma mark - Implementation details
 
-- (void)initBlockAlertView {
+- (void)BlockAlertView_init {
     _myDelegate = [[BlockAlertViewDelegate alloc] init];
     _myDelegate->_alertView = self;
     super.delegate = _myDelegate;
@@ -143,13 +134,13 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     return *handlersPointer;
 }
 
-- (BOOL)BlockAlertView_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockAlertViewPhase)phase {
+- (void)BlockAlertView_delegateWasCalledWithButtonIndex:(NSInteger)buttonIndex phase:(BlockAlertViewPhase)phase message:(SEL)selector {
     BlockAlertViewHandler handler = [self buttonHandlerAtIndex:buttonIndex phase:phase];
     if (handler) {
         handler();
-        return YES;
-    } else {
-        return NO;
+    } else if (_userDelegate && [_userDelegate respondsToSelector:selector]) {
+        typedef void DelegateMethod(id, SEL, id, NSInteger);
+        ((DelegateMethod *)objc_msgSend)(_userDelegate, selector, self, buttonIndex);
     }
 }
 
