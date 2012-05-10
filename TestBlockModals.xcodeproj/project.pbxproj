@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		314123FE155C7C77008A9382 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 314123FD155C7C77008A9382 /* README.md */; };
 		31F0D29E15505B920062CA8D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D29D15505B920062CA8D /* UIKit.framework */; };
 		31F0D2A015505B920062CA8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D29F15505B920062CA8D /* Foundation.framework */; };
 		31F0D2A215505B920062CA8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D2A115505B920062CA8D /* CoreGraphics.framework */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		314123FD155C7C77008A9382 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		31F0D29915505B920062CA8D /* TestBlockModals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestBlockModals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31F0D29D15505B920062CA8D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		31F0D29F15505B920062CA8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -107,6 +109,7 @@
 		31F0D28E15505B920062CA8D = {
 			isa = PBXGroup;
 			children = (
+				314123FD155C7C77008A9382 /* README.md */,
 				3142FBDE155A21C70025DB66 /* Presentation Files */,
 				31F0D2D615505BEC0062CA8D /* BlockModals */,
 				31F0D2A315505B920062CA8D /* TestBlockModals */,
@@ -272,6 +275,7 @@
 			files = (
 				31F0D2A815505B920062CA8D /* InfoPlist.strings in Resources */,
 				31F0D2B415505B920062CA8D /* ViewController.xib in Resources */,
+				314123FE155C7C77008A9382 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
