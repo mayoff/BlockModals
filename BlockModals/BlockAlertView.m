@@ -77,6 +77,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 
 - (void)setDelegate:(id)delegate {
     _userDelegate = delegate;
+    // This forces my superclass to recache the results of respondsToSelector:.
     super.delegate = _myDelegate;
 }
 
