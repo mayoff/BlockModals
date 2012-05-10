@@ -100,7 +100,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     if (handler == nil) {
         handlerObject = null;
     } else {
-        // ARC won't copy handler automatically because I'm converting it to an id.
         handlerObject = [handler copy];
     }
 
