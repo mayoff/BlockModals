@@ -86,22 +86,26 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     return handler == [NSNull null] ? nil : handler;
 }
 
-- (void)setButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler {
-    NSAssert(buttonIndex >= 0 && buttonIndex < self.numberOfButtons, @"buttonIndex %d is out of range [0,%d)", buttonIndex, self.numberOfButtons);
+static void padArrayWithNullThroughIndex(NSMutableArray *array, NSInteger index) {
     NSNull *null = [NSNull null];
-
-    id handlerObject = handler;
-    if (handler == nil) {
-        handlerObject = null;
-    } else {
-        handlerObject = [handler copy];
+    for (int i = array.count; i < index + 1; ++i) {
+        [array addObject:null];
     }
+}
 
+static id storableObjectForHandler(BlockActionSheetHandler handler) {
+    return handler ? [handler copy] : [NSNull null];
+}
+
+- (void)setButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase handler:(BlockActionSheetHandler)handler {
+    [self validateButtonIndex:buttonIndex];
     NSMutableArray *handlers = [self BlockActionSheet_handlersForPhase:phase];
-    for (int i = buttonIndex - handlers.count; i >= 0; --i) {
-        [handlers addObject:null];
-    }
-    [handlers replaceObjectAtIndex:buttonIndex withObject:handlerObject];
+    padArrayWithNullThroughIndex(handlers, buttonIndex);
+    [handlers replaceObjectAtIndex:buttonIndex withObject:storableObjectForHandler(handler)];
+}
+
+- (void)validateButtonIndex:(NSInteger)buttonIndex {
+    NSAssert(buttonIndex >= 0 && buttonIndex < self.numberOfButtons, @"buttonIndex %d is out of range [0,%d)", buttonIndex, self.numberOfButtons);
 }
 
 - (NSInteger)addButtonWithTitle:(NSString *)title handler:(BlockActionSheetHandler)handler {
