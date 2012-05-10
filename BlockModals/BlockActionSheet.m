@@ -135,16 +135,6 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
     return *handlersPointer;
 }
 
-- (BOOL)BlockActionSheet_invokeBlockForButtonAtIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase {
-    BlockActionSheetHandler handler = [self buttonHandlerAtIndex:buttonIndex phase:phase];
-    if (handler) {
-        handler();
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 - (void)BlockActionSheet_delegateWasCalledWithButtonIndex:(NSInteger)buttonIndex phase:(BlockActionSheetPhase)phase message:(SEL)selector {
     BlockActionSheetHandler handler = [self buttonHandlerAtIndex:buttonIndex phase:phase];
     if (handler) {
