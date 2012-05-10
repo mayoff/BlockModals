@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3142FBE2155A21E70025DB66 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142FBE1155A21E70025DB66 /* SampleViewController.m */; };
 		31F0D29E15505B920062CA8D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D29D15505B920062CA8D /* UIKit.framework */; };
 		31F0D2A015505B920062CA8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D29F15505B920062CA8D /* Foundation.framework */; };
 		31F0D2A215505B920062CA8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F0D2A115505B920062CA8D /* CoreGraphics.framework */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3142FBE0155A21E70025DB66 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
+		3142FBE1155A21E70025DB66 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
 		31F0D29915505B920062CA8D /* TestBlockModals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestBlockModals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31F0D29D15505B920062CA8D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		31F0D29F15505B920062CA8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -97,9 +100,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3142FBDE155A21C70025DB66 /* Presentation Files */ = {
+			isa = PBXGroup;
+			children = (
+				3142FBE0155A21E70025DB66 /* SampleViewController.h */,
+				3142FBE1155A21E70025DB66 /* SampleViewController.m */,
+			);
+			name = "Presentation Files";
+			sourceTree = "<group>";
+		};
 		31F0D28E15505B920062CA8D = {
 			isa = PBXGroup;
 			children = (
+				3142FBDE155A21C70025DB66 /* Presentation Files */,
 				31F0D2D615505BEC0062CA8D /* BlockModals */,
 				31F0D2A315505B920062CA8D /* TestBlockModals */,
 				31F0D2E115505C660062CA8D /* UnitTests */,
@@ -303,6 +316,7 @@
 				31F0D2B115505B920062CA8D /* ViewController.m in Sources */,
 				31F0D2F315505D5E0062CA8D /* BlockAlertView.m in Sources */,
 				31F0D3311550E4900062CA8D /* BlockActionSheet.m in Sources */,
+				3142FBE2155A21E70025DB66 /* SampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

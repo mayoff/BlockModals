@@ -70,6 +70,7 @@ Copyright (c) 2012 Rob Mayoff. All rights reserved.
 - (void)setDelegate:(id<UIActionSheetDelegate>)delegate {
     _userDelegate = delegate;
     // This forces my superclass to recache the results of respondsToSelector:.
+    super.delegate = nil;
     super.delegate = _myDelegate;
 }
 
