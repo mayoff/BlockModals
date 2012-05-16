@@ -1,6 +1,6 @@
 /*
 Created by Rob Mayoff on 5/1/12.
-Copyright (c) 2012 Rob Mayoff. All rights reserved.
+Author: Rob Mayoff.  All rights renounced.  This file is in the public domain..
 */
 
 #import "BlockActionSheet.h"

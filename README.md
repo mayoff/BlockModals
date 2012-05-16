@@ -28,3 +28,8 @@ To use `BlockAlertView` in your own project, just copy the files `BlockAlertView
 ## BlockActionSheet
 
 The `BlockActionSheet` class is a subclass of `UIActionSheet` and adds the same methods as `BlockAlertView`.  To use it in your own project, copy `BlockActionSheet.h` and `BlockActionSheet.m` to your project, and add `BlockActionSheet.m` to the “Compile Sources” phase of your target.
+
+----
+The contents of this repository are dedicated to the public domain, in accordance with the [CC0 1.0 Universal Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/), which is reproduced in the file `COPYRIGHT`.
+
+Author: Rob Mayoff 2012-05-16
